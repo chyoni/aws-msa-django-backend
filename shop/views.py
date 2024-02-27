@@ -13,8 +13,6 @@ class ShopViewSet(viewsets.ViewSet):
 
         serializer = ShopSerializer(shops, many=True)
 
-        publish()
-
         return Response(serializer.data)
 
     def create(self, request):
@@ -23,6 +21,8 @@ class ShopViewSet(viewsets.ViewSet):
         serializer.is_valid(raise_exception=True)
 
         serializer.save()
+
+        publish('shop_created', serializer.data)
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -34,6 +34,8 @@ class ShopViewSet(viewsets.ViewSet):
         serializer.is_valid(raise_exception=True)
 
         serializer.save()
+
+        publish('shop_updated', serializer.data)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -48,5 +50,7 @@ class ShopViewSet(viewsets.ViewSet):
         shop = Shop.objects.get(id=pk)
 
         shop.delete()
+
+        publish('shop_deleted', pk)
 
         return Response(status=status.HTTP_200_OK)
