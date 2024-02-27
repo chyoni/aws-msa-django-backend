@@ -4,12 +4,16 @@ from rest_framework.response import Response
 from shop.models import Shop
 from shop.serializers import ShopSerializer
 
+from order.producer import publish
+
 class ShopViewSet(viewsets.ViewSet):
 
     def list(self, request):
         shops = Shop.objects.all()
 
         serializer = ShopSerializer(shops, many=True)
+
+        publish()
 
         return Response(serializer.data)
 
