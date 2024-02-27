@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_SERVICE = [
     'order',
+    'shop',
 ]
 
 INSTALLED_DEPENDENCIES = [

@@ -31,3 +31,11 @@ pip freeze --all > requirements.txt
 ```bash
 pip install -r requirements.txt
 ```
+
+# Migration
+
+```bash
+1. Go to backend-server Container 
+2. python manage.py makemigrations
+3. python manage.py migrate
+```
