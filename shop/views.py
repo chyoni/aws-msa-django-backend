@@ -1,19 +1,48 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from shop.models import Shop
+from shop.serializers import ShopSerializer
 
 class ShopViewSet(viewsets.ViewSet):
 
     def list(self, request):
-        pass
+        shops = Shop.objects.all()
+
+        serializer = ShopSerializer(shops, many=True)
+
+        return Response(serializer.data)
 
     def create(self, request):
-        pass
+        serializer = ShopSerializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+        
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, pk=None):
-        pass
+        shop = Shop.objects.get(id=pk)
+
+        serializer = ShopSerializer(instance=shop, data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, pk=None):
-        pass
+        shop = Shop.objects.get(id=pk)
+
+        serializer = ShopSerializer(shop)
+
+        return Response(serializer.data)
 
     def destroy(self, request, pk=None):
-        pass
+        shop = Shop.objects.get(id=pk)
+
+        shop.delete()
+
+        return Response(status=status.HTTP_200_OK)

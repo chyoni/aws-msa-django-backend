@@ -11,6 +11,8 @@ services:
       - .:/app
     depends_on:
       - db
+    environment:
+      - TZ=Asia/Seoul
   
   db:
     container_name: django-order-service-db
@@ -21,6 +23,7 @@ services:
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root
       - MYSQL_ROOT_PASSWORD=root
+      - TZ=Asia/Seoul
     volumes:
       - .dbdata:/var/lib/mysql
     ports:
