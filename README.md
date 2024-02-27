@@ -39,3 +39,12 @@ pip install -r requirements.txt
 2. python manage.py makemigrations
 3. python manage.py migrate
 ```
+
+# RabbitMQ
+
+### Required
+- Create file this path: ./config/constants.py
+- add this line:
+```bash
+RABBITMQ_URL="Your CloudAMQP Instance URL"
+```
