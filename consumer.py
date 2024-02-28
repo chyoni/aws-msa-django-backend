@@ -26,10 +26,12 @@ channel.queue_declare(queue='order')
 def callback(ch, method, properties, body):
     print('---------- Received in order ----------')
 
+    print("properties: ", properties)
+
     if properties.content_type == 'order_delivery_finished':
         id = json.loads(body)
 
-        print(id)
+        print("order id: ", id)
 
         order = Order.objects.get(id=id)
 
